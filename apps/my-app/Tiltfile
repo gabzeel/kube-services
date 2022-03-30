@@ -1,0 +1,15 @@
+load('ext://deployment', 'deployment_create')
+
+docker_build(
+  'my-app',
+  context='.',
+  dockerfile='./Dockerfile',
+)
+
+deployment_create('my-app')
+
+k8s_resource(
+  workload='my-app',
+  labels='my-app',
+  port_forwards=3001
+)
