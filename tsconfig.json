@@ -18,11 +18,14 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "wall/my-library": [
-        "libs/my-library/src"
+      "@kube-service/mqtt": [
+        "libs/mqtt/src"
       ],
-      "wall/my-library/*": [
-        "libs/my-library/src/*"
+      "@kube-service/amqp": [
+        "libs/amqp/src"
+      ],
+      "@kube-service/redis": [
+        "libs/redis/src"
       ]
     }
   }
