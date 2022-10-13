@@ -1,0 +1,14 @@
+load('ext://deployment', 'deployment_create')
+
+docker_build(
+  'amqp-service',
+  context='.',
+  dockerfile='./Dockerfile',
+)
+
+deployment_create('amqp-service')
+
+k8s_resource(
+  workload='amqp-service',
+  labels='amqp-service'
+)

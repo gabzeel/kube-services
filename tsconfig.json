@@ -26,6 +26,9 @@
       ],
       "@kube-service/redis": [
         "libs/redis/src"
+      ],
+      "@kube-service/test": [
+        "libs/test/src"
       ]
     }
   }

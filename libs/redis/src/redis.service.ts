@@ -7,45 +7,23 @@ import { IRedisModuleOptions, IRedisSubscribeOptions } from './redis.interface';
 export class RedisService implements OnApplicationBootstrap {
   private pub: Redis;
   private sub: Redis;
-  private subscribers: IRedisSubscribeOptions[] = [];
 
   constructor(
     @Inject(REDIS_OPTIONS_PROVIDER)
-    private redisOptions: IRedisModuleOptions,
+    private readonly redisOptions: IRedisModuleOptions,
   ) {}
 
   async onApplicationBootstrap() {
     try {
-      this.pub = new Redis();
-      this.sub = new Redis();
-
-      // await Promise.all([
-      //   new Promise((res, rej) => {
-      //     this.pub.connect((err) => {
-      //       if (err) {
-      //         rej(err);
-      //       } else {
-      //         res(undefined);
-      //       }
-      //     });
-      //   }),
-      //   new Promise((res, rej) => {
-      //     this.sub.connect((err) => {
-      //       if (err) {
-      //         rej(err);
-      //       } else {
-      //         res(undefined);
-      //       }
-      //     });
-      //   }),
-      // ]);
+      this.pub = new Redis(this.redisOptions.port, this.redisOptions.host);
+      this.sub = new Redis(this.redisOptions.port, this.redisOptions.host);
     } catch (error) {
-      throw new Error('Error to connect to MQTT');
+      throw new Error('Error to connect to Redis');
     }
   }
 
   publish(channel: string, message: Record<string, any>) {
-    return this.pub.publish(channel, JSON.stringify(message));
+    this.pub.publish(channel, JSON.stringify(message));
   }
 
   async subscribe(options: IRedisSubscribeOptions) {

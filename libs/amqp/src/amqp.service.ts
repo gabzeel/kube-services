@@ -24,22 +24,23 @@ export class AMQPService implements OnApplicationBootstrap {
     }
   }
 
-  async publish(queue: string, message: Record<string, any>) {
-    return this.channel.sendToQueue(
-      queue,
-      Buffer.from(JSON.stringify(message)),
-    );
+  publish(queue: string, message: Record<string, any>) {
+    this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
   }
 
   async subscribe(options: IAMQPSubscribeOptions) {
     try {
       await this.channel.assertQueue(options.queue);
 
-      this.channel.consume(options.queue, async (message) => {
-        const payload = JSON.parse(message.content.toString());
+      this.channel.consume(
+        options.queue,
+        async (message) => {
+          const payload = JSON.parse(message.content.toString());
 
-        options.callback(payload);
-      });
+          options.callback(payload);
+        },
+        { noAck: true },
+      );
     } catch (error) {
       throw error;
     }

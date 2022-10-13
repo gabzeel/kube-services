@@ -17,7 +17,10 @@ export class MQTTService implements OnApplicationBootstrap {
     try {
       this.client = await connectAsync(
         this.mqttOptions.connectionUrl || 'tcp://localhost:1883',
-        undefined,
+        {
+          host: '172.17.0.1',
+          port: 1883,
+        },
         false,
       );
     } catch (error) {
@@ -26,7 +29,7 @@ export class MQTTService implements OnApplicationBootstrap {
   }
 
   publish(channel: string, message: Record<string, any>) {
-    return this.client.publish(channel, JSON.stringify(message));
+    this.client.publish(channel, JSON.stringify(message));
   }
 
   async subscribe(options: IMQTTSubscribeOptions) {

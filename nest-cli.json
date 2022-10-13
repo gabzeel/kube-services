@@ -1,29 +1,47 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/kube-services/src",
+  "sourceRoot": "apps/app/src",
   "monorepo": true,
-  "root": "apps/kube-services",
+  "root": "apps/app",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "apps/kube-services/tsconfig.app.json"
+    "tsConfigPath": "apps/app/tsconfig.app.json"
   },
   "projects": {
-    "kube-services": {
+    "app": {
       "type": "application",
-      "root": "apps/kube-services",
+      "root": "apps/app",
       "entryFile": "main",
-      "sourceRoot": "apps/kube-services/src",
+      "sourceRoot": "apps/app/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/kube-services/tsconfig.app.json"
+        "tsConfigPath": "apps/app/tsconfig.app.json"
       }
     },
-    "my-app": {
+    "amqp-service": {
       "type": "application",
-      "root": "apps/my-app",
+      "root": "apps/amqp-service",
       "entryFile": "main",
-      "sourceRoot": "apps/my-app/src",
+      "sourceRoot": "apps/amqp-service/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/my-app/tsconfig.app.json"
+        "tsConfigPath": "apps/amqp-service/tsconfig.app.json"
+      }
+    },
+    "mqtt-service": {
+      "type": "application",
+      "root": "apps/mqtt-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/mqtt-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mqtt-service/tsconfig.app.json"
+      }
+    },
+    "redis-service": {
+      "type": "application",
+      "root": "apps/redis-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/redis-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/redis-service/tsconfig.app.json"
       }
     },
     "mqtt": {
@@ -33,6 +51,15 @@
       "sourceRoot": "libs/mqtt/src",
       "compilerOptions": {
         "tsConfigPath": "libs/mqtt/tsconfig.lib.json"
+      }
+    },
+    "test": {
+      "type": "library",
+      "root": "libs/test",
+      "entryFile": "index",
+      "sourceRoot": "libs/test/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/test/tsconfig.lib.json"
       }
     }
   }
