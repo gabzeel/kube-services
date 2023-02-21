@@ -8,9 +8,15 @@ import { TestModule } from '../../../libs/test/src';
 @Module({
   imports: [
     TestModule.forRootAsync(),
-    MQTTModule.forRootAsync(),
-    AMQPModule.forRootAsync(),
-    RedisModule.forRootAsync(),
+    MQTTModule.forRootAsync({
+      connectionUrl: 'mqtt://localhost:1883',
+    }),
+    AMQPModule.forRootAsync({
+      connectionUrl: 'amqp://localhost',
+    }),
+    RedisModule.forRootAsync({
+      connectionUrl: 'redis://localhost',
+    }),
   ],
   providers: [AMQP],
 })

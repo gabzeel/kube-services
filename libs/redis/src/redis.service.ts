@@ -15,8 +15,8 @@ export class RedisService implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     try {
-      this.pub = new Redis(this.redisOptions.port, this.redisOptions.host);
-      this.sub = new Redis(this.redisOptions.port, this.redisOptions.host);
+      this.pub = new Redis(this.redisOptions.connectionUrl);
+      this.sub = new Redis(this.redisOptions.connectionUrl);
     } catch (error) {
       throw new Error('Error to connect to Redis');
     }

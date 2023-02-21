@@ -15,8 +15,10 @@ export interface ITestResult {
 }
 
 export interface ITestIterations {
-  testNumber: number;
+  test: string;
   stages: ITestStage[];
+  iterations?: number;
+  executedIterations?: number;
   startDate?: Date;
   endDate?: Date;
   timeDiff?: number;
@@ -27,6 +29,11 @@ export interface ITestIterations {
 
 export interface ITestFinalResult {
   iterations: [
-    Omit<ITestIterations, 'stages' | 'currentStage' | 'bytesu' | 'testNumber'>,
+    Omit<ITestIterations, 'stages' | 'currentStage' | 'bytesu' | 'test'>,
   ];
 }
+
+export type FinalResult = Omit<
+  ITestIterations,
+  'stages' | 'currentStage' | 'bytesu' | 'test'
+>;

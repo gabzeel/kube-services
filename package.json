@@ -6,13 +6,15 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "pm2:start": "npm run build && pm2 start",
     "prebuild": "rimraf dist",
     "build": "nest build app && nest build amqp-service && nest build mqtt-service && nest build redis-service",
     "start": "nest start",
+    "start:pm2": "npm run build && pm2 start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "clear:results": "rm results/*"
+    "results:graph": "ts-node scripts/graph-analyzer.ts",
+    "results:table": "ts-node scripts/table-analyzer.ts",
+    "results:clear": "rm results/*"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.7.1",
@@ -23,6 +25,7 @@
     "amqplib": "^0.10.3",
     "async-mqtt": "^2.6.3",
     "ioredis": "^5.2.3",
+    "mqtt": "^4.3.7",
     "nodeplotlib": "^1.1.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

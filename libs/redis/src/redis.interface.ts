@@ -1,6 +1,5 @@
 export interface IRedisModuleOptions {
-  port?: number;
-  host?: string;
+  connectionUrl?: string;
 }
 
 export interface IRedisSubscribeOptions {

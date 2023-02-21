@@ -1,11 +1,11 @@
 import { Inject, Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { connectAsync, AsyncMqttClient } from 'async-mqtt';
+import { connect, MqttClient } from 'mqtt';
 import { MQTT_OPTIONS_PROVIDER } from './mqtt.const';
 import { IMQTTModuleOptions, IMQTTSubscribeOptions } from './mqtt.interface';
 
 @Injectable()
 export class MQTTService implements OnApplicationBootstrap {
-  private client: AsyncMqttClient;
+  private client: MqttClient;
   private subscribers: IMQTTSubscribeOptions[] = [];
 
   constructor(
@@ -15,11 +15,17 @@ export class MQTTService implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     try {
-      this.client = await connectAsync(
-        this.mqttOptions.connectionUrl || 'tcp://localhost:9001',
-        {},
-        false,
-      );
+      console.log(this.mqttOptions.connectionUrl);
+      this.client = connect(this.mqttOptions.connectionUrl);
+      await new Promise((res, rej) => {
+        this.client.on('connect', function () {
+          res(undefined);
+        });
+
+        this.client.on('error', function () {
+          rej(undefined);
+        });
+      });
     } catch (error) {
       throw error;
     }
@@ -30,22 +36,10 @@ export class MQTTService implements OnApplicationBootstrap {
   }
 
   async subscribe(options: IMQTTSubscribeOptions) {
-    try {
-      await this.client.subscribe(options.topic);
-
-      this.subscribers.push(options);
-
-      this.client.on('message', async (topic: string, message: string) => {
-        const payload = JSON.parse(message);
-
-        await Promise.all(
-          this.subscribers
-            .filter((subscribe) => subscribe.topic === topic)
-            .map(async (subscribe) => subscribe.callback(payload)),
-        );
-      });
-    } catch (error) {
-      throw error;
-    }
+    this.client.subscribe(options.topic, (err) => {
+      if (err) {
+        throw err;
+      }
+    });
   }
 }
