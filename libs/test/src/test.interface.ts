@@ -28,7 +28,7 @@ export interface ITestIterations {
 }
 
 export interface ITestFinalResult {
-  iterations: [
+  results: [
     Omit<ITestIterations, 'stages' | 'currentStage' | 'bytesu' | 'test'>,
   ];
 }

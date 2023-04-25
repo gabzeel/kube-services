@@ -54,35 +54,55 @@ export class TestService {
     message.currentStage =
       message.currentStage !== undefined ? message.currentStage + 1 : 0;
 
+    // message.bytes =
+    //   message.stages[message.currentStage].bytes > 1
+    //     ? randomBytes(message.stages[message.currentStage].bytes)
+    //     : undefined;
+
+    const bytes = Math.floor(Math.random() * 5000000);
+
     message.bytes =
       message.stages[message.currentStage].bytes > 1
-        ? randomBytes(message.stages[message.currentStage].bytes)
+        ? randomBytes(bytes)
         : undefined;
 
     message.results.push({
       type: message.stages[message.currentStage].type,
       startDate: new Date(),
       iteration: message.currentStage,
-      bytes: message.stages[message.currentStage].bytes,
+      // bytes: message.stages[message.currentStage].bytes,
+      bytes,
     });
 
-    this.publisMessage(message.stages[message.currentStage].type, message);
+    await this.publisMessage(
+      message.stages[message.currentStage].type,
+      message,
+    );
   }
 
-  private publisMessage(
+  private async publisMessage(
     interationType: ETestIterationType,
     message: ITestIterations,
   ) {
-    switch (interationType) {
-      case ETestIterationType.REDIS:
-        return this.redisService.publish(TEST_CHANNEL_OR_QUEUE, message);
-      case ETestIterationType.AMQP:
-        return this.amqpService.publish(TEST_CHANNEL_OR_QUEUE, message);
-      case ETestIterationType.MQTT:
-        return this.mqttService.publish(TEST_CHANNEL_OR_QUEUE, message);
-    }
+    try {
+      switch (interationType) {
+        case ETestIterationType.REDIS:
+          return await this.redisService.publish(
+            TEST_CHANNEL_OR_QUEUE,
+            message,
+          );
+        case ETestIterationType.AMQP:
+          return this.amqpService.publish(TEST_CHANNEL_OR_QUEUE, message);
+        case ETestIterationType.MQTT:
+          return await this.mqttService.publish(TEST_CHANNEL_OR_QUEUE, message);
+        default:
+          throw new Error('Publish service not found');
+      }
+    } catch (error) {
+      console.error(error);
 
-    throw new Error('Publish service not found');
+      throw error;
+    }
   }
 
   private finishTest(message: ITestIterations) {

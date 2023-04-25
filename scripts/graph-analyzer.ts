@@ -1,18 +1,42 @@
 import { plot, Plot } from 'nodeplotlib';
 import { readFileSync } from 'fs';
-import { ITestFinalResult } from '../libs/test/src';
+import { FinalResult } from '../libs/test/src';
 
 const file = readFileSync(`results/result_${process.argv[2]}.json`);
-const data: ITestFinalResult = JSON.parse(file.toString());
+const data: FinalResult = JSON.parse(file.toString());
 console.log(`results/result_${process.argv[3]}.json`);
-const x: number[] = [];
-const y: number[] = [];
+const timeDiff: number[] = [];
+const bytesTimeDIff: number[] = [];
+const bytes: number[] = [];
 
-data.iterations.map((iteration, index) => {
-  y.push(index + 1);
-  x.push(iteration.timeDiff / 1000);
+data.results.map((iteration) => {
+  timeDiff.push(iteration.timeDiff);
 });
 
-const trace1: Plot = { x, type: 'histogram' };
+data.results
+  .sort((first, second) => {
+    return first.bytes - second.bytes;
+  })
+  .map((iteration) => {
+    bytesTimeDIff.push(iteration.timeDiff * 2);
+    bytes.push(iteration.timeDiff);
+  });
+
+const trace1: Plot = {
+  y: timeDiff,
+  type: 'scatter',
+  name: 'Tempo em cada iteração',
+  showlegend: true,
+};
+
+const trace2: Plot = {
+  x: bytesTimeDIff,
+  y: bytes,
+  type: 'bar',
+  name: 'Tempo pela quantidade de bytes',
+  showlegend: true,
+};
 
 plot([trace1]);
+
+plot([trace2]);

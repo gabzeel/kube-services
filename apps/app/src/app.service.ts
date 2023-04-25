@@ -6,6 +6,6 @@ export class AppService {
   constructor(private readonly testService: TestService) {}
 
   startScript(message: ITestIterations) {
-    this.testService.runIteration(message);
+    return this.testService.runIteration(message);
   }
 }

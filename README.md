@@ -3,14 +3,13 @@ My graduation project to obtain a bachelor degree in Computer Science for Federa
 
 Request example:
 
-{
-  "iteration": 0,
-  "step": 0,
-  "stages": [
-    {
-      "type": "amqp",
-      "bytes": 100,
-      "steps": 0
-    }
-  ]
-}
+  {
+    "iteration": 0,
+    "step": 0,
+    "stages": [
+      {
+        "type": "amqp",
+        "bytes": 100
+      }
+    ]
+  }

@@ -8,8 +8,9 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build app && nest build amqp-service && nest build mqtt-service && nest build redis-service",
+    "build:libs": "nest build app && nest build amqp && nest build mqtt && nest build redis && nest build test",
     "start": "nest start",
-    "start:pm2": "npm run build && pm2 start",
+    "start:pm2": "pm2 start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "results:graph": "ts-node scripts/graph-analyzer.ts",

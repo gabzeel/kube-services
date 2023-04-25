@@ -23,7 +23,7 @@ export class RedisService implements OnApplicationBootstrap {
   }
 
   publish(channel: string, message: Record<string, any>) {
-    this.pub.publish(channel, JSON.stringify(message));
+    return this.pub.publish(channel, JSON.stringify(message));
   }
 
   async subscribe(options: IRedisSubscribeOptions) {

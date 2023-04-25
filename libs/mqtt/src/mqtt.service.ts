@@ -26,7 +26,7 @@ export class MQTTService implements OnApplicationBootstrap {
   }
 
   publish(channel: string, message: Record<string, any>) {
-    this.client.publish(channel, JSON.stringify(message));
+    return this.client.publish(channel, JSON.stringify(message));
   }
 
   async subscribe(options: IMQTTSubscribeOptions) {
