@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 50ms
+
+scrape_configs:
+  - job_name: "app-amqp-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["192.168.15.169:4001"]
+  - job_name: "app-mqtt-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["192.168.15.169:4001"]
+  - job_name: "app-redis-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["192.168.15.169:4001"]
+  - job_name: "host"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["192.168.15.169:9100"]
+  - job_name: "redis"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["192.168.15.169:9121"]
+  - job_name: "amqp"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["rabbitmq:15692"]

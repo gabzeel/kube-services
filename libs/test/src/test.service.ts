@@ -61,6 +61,12 @@ export class TestService {
 
       this.logger.log(`Test ${message.name} finished`);
 
+      this.results = {
+        startDate: new Date(),
+        endDate: new Date(),
+        messages: [],
+      };
+
       return;
     }
 

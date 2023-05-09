@@ -1,4 +1,3 @@
-import '../../../tracer/tracer';
 import { NestFactory } from '@nestjs/core';
 import { AMQPServiceModule } from './amqp-service.module';
 
