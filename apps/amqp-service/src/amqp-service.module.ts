@@ -4,6 +4,7 @@ import { AMQPModule } from '../../../libs/amqp/src';
 import { RedisModule } from '../../../libs/redis/src';
 import { AMQP } from './amqp-service.service';
 import { TestModule } from '../../../libs/test/src';
+import { AmqpController } from './amqp.controller';
 
 @Module({
   imports: [
@@ -19,5 +20,6 @@ import { TestModule } from '../../../libs/test/src';
     }),
   ],
   providers: [AMQP],
+  controllers: [AmqpController],
 })
 export class AMQPServiceModule {}

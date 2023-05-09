@@ -1,39 +1,18 @@
 import { ETestIterationType } from './test.enum';
 
-export interface ITestStage {
-  type: ETestIterationType;
-  bytes: number;
-}
-
-export interface ITestResult {
-  iteration: number;
-  type: ETestIterationType;
-  bytes: number;
-  startDate: Date;
-  endDate?: Date;
-  timeDiff?: number;
-}
-
-export interface ITestIterations {
-  test: string;
-  stages: ITestStage[];
-  iterations?: number;
-  executedIterations?: number;
+export interface IMessage {
+  name: string;
   startDate?: Date;
-  endDate?: Date;
-  timeDiff?: number;
-  currentStage?: number;
-  results?: ITestResult[];
   bytes?: Buffer;
+  limit?: number;
+  iterationType?: ETestIterationType;
 }
 
-export interface ITestFinalResult {
-  results: [
-    Omit<ITestIterations, 'stages' | 'currentStage' | 'bytesu' | 'test'>,
-  ];
+export interface IResult {
+  startDate: Date;
+  endDate: Date;
+  messages: {
+    startDate: Date;
+    endDate: Date;
+  }[];
 }
-
-export type FinalResult = Omit<
-  ITestIterations,
-  'stages' | 'currentStage' | 'bytesu' | 'test'
->;

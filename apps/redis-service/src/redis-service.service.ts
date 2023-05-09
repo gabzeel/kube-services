@@ -2,9 +2,9 @@ import { OnApplicationBootstrap } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { RedisService } from '../../../libs/redis/src';
 import {
-  ITestIterations,
   TestService,
   TEST_CHANNEL_OR_QUEUE,
+  IMessage,
 } from '../../../libs/test/src';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class Redis implements OnApplicationBootstrap {
     });
   }
 
-  async execute(message: ITestIterations) {
-    this.testService.runIteration(message);
+  async execute(message: IMessage) {
+    this.testService.processMessage(message);
   }
 }
